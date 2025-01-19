@@ -1,0 +1,272 @@
+
+== RISC-V Vector Extension for Logarithmic Number System Arithmetic
+
+This document describes a LNS Vector extension to the
+RISC-V Instruction Set Architecture.
+
+This document is _Discussion Document_.
+Assume everything can change.
+This document is not complete yet and was created only for the purpose of conversation outside of the document.
+For more information, see link:http://riscv.org/spec-state[here].
+
+
+[[vector_lns]]
+=== Extensions Overview
+
+
+
+Detection of individual vector LNS extensions uses the
+unified software-based RISC-V discovery method.
+
+[NOTE]
+====
+At the time of writing, these discovery mechanisms are still a work in
+progress.
+====
+
+[[lns_format]]
+==== Logarithmic Number System
+
+
+The Logarithmic Number System (or LNS in short) is a number format and an arithmetic which encodes and operates on numbers represented by a basis B, a sign S and a fixed-point exponent E.
+The triplet (B, S, E) encode `(-1)^s * B^E`.
+
+===== LNS Formats
+
+===== Special values
+
+===== LNS Arithmetic
+
+[[zvlns]]
+==== `Zvlns` - Vector Logarithmic Number System
+
+
+
+Note:: 
+      
+
+[%autowidth]
+[%header,cols="^2,4"]
+|===
+|Mnemonic
+|Instruction
+| `vfcvt.l.f.v`  | <<insns-vfcvt-l-f>>
+| `vfcvt.f.l.v`  | <<insns-vfcvt-f-l>>
+| `vlqdot.vv`    | <<insns-vlqdot>>
+
+|===
+
+
+[[vector_lns_insn, reftext="Vector LNS Instructions"]]
+=== Instructions
+
+
+[[insns-vfcvt-l-f, Vector Conversion from Floating-Point to LNS]]
+==== vfcvt.l.f.v
+
+Synopsis::
+
+Vector Conversion from floating-point to LNS
+
+Mnemonic::
+vfcvt.l.f.v vd, vs2, vm +
+
+Encoding (Vector-Vector)::
+[wavedrom, , svg]
+....
+{reg:[
+{bits: 7, name: 'OP-VE'},
+{bits: 5, name: 'vd'},
+{bits: 3, name: 'OPMVV'}, // TO BE FIXED
+{bits: 5, name: 'vs1'}, // TO BE FIXED
+{bits: 5, name: 'vs2'},
+{bits: 1, name: 'vm'},
+{bits: 6, name: '001100'}, // TO BE SELECTED
+]}
+....
+
+Reserved Encodings::
+* None
+
+Arguments::
+
+[%autowidth]
+[%header,cols="4,2,2"]
+|===
+|Register
+|Direction
+|Definition
+
+| `vs2`       | input  | vector of floating-point encoded elements
+| `vd`        | output | vector of converted LNS elements
+|===
+
+Description::
+Convert each active body element from SEW-wide standard floating-point format to SEW-wide LNS format.
+
+
+
+Operation::
+[source,sail]
+--
+
+
+function clause execute (vfcvt_F2L(vs2, vd, suffix)) = {
+
+  foreach (i from vstart to vl-1) {
+    // TODO: handle inactive elements
+    let op2 : bits (SEW) = get_velem(vs2, i);
+    let result : bits (SEW) = f2l(op2, SEW);
+    set_velem(vd, i, result);
+  }
+  RETIRE_SUCCESS
+}
+
+function f2l(x, width) = {
+  let result : bits(width) = zeros();
+  TODO
+  result
+}
+--
+
+Included in::
+<<zvlns>>
+
+[[insns-vfcvt-f-l, Vector Conversion from LNS to Floating-Point]]
+==== vfcvt.f.l.v
+
+Synopsis::
+
+Vector Conversion from LNS to floating-point
+
+Mnemonic::
+vfcvt.f.l.v vd, vs2, vm +
+
+Encoding (Vector-Vector)::
+[wavedrom, , svg]
+....
+{reg:[
+{bits: 7, name: 'OP-VE'},
+{bits: 5, name: 'vd'},
+{bits: 3, name: 'OPMVV'}, // TO BE FIXED
+{bits: 5, name: 'vs1'}, // TO BE FIXED
+{bits: 5, name: 'vs2'},
+{bits: 1, name: 'vm'},
+{bits: 6, name: '001100'}, // TO BE SELECTED
+]}
+....
+
+Reserved Encodings::
+* None
+
+Arguments::
+
+[%autowidth]
+[%header,cols="4,2,2"]
+|===
+|Register
+|Direction
+|Definition
+
+| `vs2`       | input  | vector of LNS elements
+| `vd`        | output | vector of converted floating-point elements
+|===
+
+Description::
+Convert each active body element from SEW-wide LNS format to SEW-wide standard floating-point format.
+
+
+
+Operation::
+[source,sail]
+--
+
+
+function clause execute (vfcvt_L2F(vs2, vd, suffix)) = {
+
+  foreach (i from vstart to vl-1) {
+    // TODO: handle inactive elements
+    let op2 : bits (SEW) = get_velem(vs2, i);
+    let result : bits (SEW) = l2f(op2, SEW);
+    set_velem(vd, i, result);
+  }
+  RETIRE_SUCCESS
+}
+
+function l2f(x, width) = {
+  let result : bits(width) = zeros();
+  TODO
+  result
+}
+--
+
+Included in::
+<<zvlns>>
+
+| `vlqdot.vv`    | <<insns-vlqdot>>
+[[insns-vlqdot, Vector Quad Element Dot Product Accumulate in LNS format]]
+==== vlqdot.vv
+
+Synopsis::
+
+Vector 4D Dot Product Accumulate in LNS format
+
+Mnemonic::
+vlqdot.vv vd, vs2, vs1, vm +
+
+Encoding (Vector-Vector)::
+[wavedrom, , svg]
+....
+{reg:[
+{bits: 7, name: 'OP-VE'},
+{bits: 5, name: 'vd'},
+{bits: 3, name: 'OPMVV'}, // TO BE FIXED
+{bits: 5, name: 'vs1'}, // TO BE FIXED
+{bits: 5, name: 'vs2'},
+{bits: 1, name: 'vm'},
+{bits: 6, name: '001100'}, // TO BE SELECTED
+]}
+....
+
+Reserved Encodings::
+* None
+
+Arguments::
+
+[%autowidth]
+[%header,cols="4,2,2"]
+|===
+|Register
+|Direction
+|Definition
+
+| `vd`        | input  | vector of addend source LNS elements
+| `vs2`       | input  | vector of left hand side LNS elements
+| `vs1`       | input  | vector of right hand side LNS elements
+| `vd`        | output | vector of accumulated dot product LNS elements
+|===
+
+Description::
+
+Compute the 4D dot product between 4-element bundle in `vs1` and `vs2` (in LNS formats) and accumulate the result with
+the accumulator read from `vd`. The result is written back to `vd` (this operation is destructive).
+
+TODO: describe LNS formats for `vs1` and `vs2`, and `vd`.
+
+
+Operation::
+[source,sail]
+--
+
+
+function clause execute (vfcvt_L2F(vs2, vd, suffix)) = {
+
+  foreach (i from vstart to vl-1) {
+    set_velem(vd, i, result);
+  }
+  RETIRE_SUCCESS
+}
+--
+
+Included in::
+<<zvlns>>
