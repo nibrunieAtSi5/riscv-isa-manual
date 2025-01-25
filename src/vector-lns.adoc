@@ -14,6 +14,13 @@ For more information, see link:http://riscv.org/spec-state[here].
 === Extensions Overview
 
 
+Zvlns is a vector extension for the RISC-V ISA that adds support for Logarithmic Number System (LNS) arithmetic.
+
+The logarithmic number system (LNS) offers a different tradeoff than integer and floating-point arithmetic:
+multiplications/divisions are cheap in LNS while additions/subtraction are expensive.
+
+LNS is presented in more details <<lns_format>>.
+
 
 Detection of individual vector LNS extensions uses the
 unified software-based RISC-V discovery method.
@@ -33,7 +40,34 @@ The triplet (B, S, E) encode `(-1)^s * B^E`.
 
 ===== LNS Formats
 
+This specification defines multiple LNS formats, which can be selected by `vtype.vsew` and `vtype.altfmt`.
+
+The following LNS formats are defined:
+
+- **LE8P23**: 32-bit format with a 31-bit fixed-point exponent with 8-bit integer part and 23-bit fractional part.
+- **LE8P7**: 16-bit format with a 15-bit fixed-point exponent with 8-bit integer part and 7-bit fractional part.
+- **LE5P10**: 16-bit format with a 15-bit fixed-point exponent with 5-bit integer part and 10-bit fractional part.
+- **LE5P2**: 8-bit format with a 7-bit fixed-point exponent with 5-bit integer part and 2-bit fractional part.
+- **LE4P3**: 8-bit format with a 7-bit fixed-point exponent with 4-bit integer part and 3-bit fractional part.
+- **LE2P1**: 4-bit format with a 3-bit fixed-point exponent with 2-bit integer part and 1-bit fractional part.
+
+The format are selected as follows:
+
+
+[%autowidth]
+[%header,cols="^3,4,4"]
+|===
+| Format | `vtype.vsew` | `vtype.altfmt` 
+| LE8P23 | 2            | 0              
+| LE8P7  | 1            | 1              
+| LE5P10 | 1            | 0              
+| LE5P2  | 0            | 1              
+| LE4P3  | 0            | 0              
+|===
+
 ===== Special values
+
+(signaling?) NaN, Infinity(/ies?), (signed?) zero(s)
 
 ===== LNS Arithmetic
 
