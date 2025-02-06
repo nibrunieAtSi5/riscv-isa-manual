@@ -32,13 +32,13 @@ progress.
 ====
 
 [[lns_format]]
-==== Logarithmic Number System
+=== Logarithmic Number System
 
 
 The Logarithmic Number System (or LNS in short) is a number format and an arithmetic which encodes and operates on numbers represented by a basis B, a sign S and a fixed-point exponent E.
 The triplet (B, S, E) encode `(-1)^s * B^E`.
 
-===== LNS Formats
+==== LNS Formats
 
 This specification defines multiple LNS formats, which can be selected by `vtype.vsew` and `vtype.altfmt`.
 
@@ -65,11 +65,52 @@ The format are selected as follows:
 | LE4P3  | 0            | 0              
 |===
 
-===== Special values
+==== Special values
 
 (signaling?) NaN, Infinity(/ies?), (signed?) zero(s)
 
-===== LNS Arithmetic
+==== LNS Arithmetic
+
+In the following we consider two numbers, `X` and `Y`, encoded in the same LNS format `LE<I>P<F>` (fixed-point exponent with `I` integer bits and `F` fractional bits). 
+
+`X` is encoded by its 1-bit sign `S_X` and its `I + F`-bit exponent `E_X`.
+`Y` is encoded by its 1-bit sign `S_Y` and its `I + F`-bit exponent `E_Y`.
+
+0 is encoded as `E=0`. // TODO define the sign of zero
+signed infinities are encoded with `E=2^(I+F)-2`.
+NaN are encoded with `E=2^(I+F)-1`.
+
+Note:: LNS Special values are encoded with `(E >> 1)=2^(I+F-1)-1`.
++ The exponent least significant bit of a special values encode infinity (`LSB=0`) or NaN (`LSB=1`).
+
+
+===== LNS Multiplication
+
+LNS multiplication is straightforward: the exponents are simply added using a fixed-point addition.
+Overflowing values are saturated to signed infinities and underflowing values are saturated to zero.
+
+
+```
+// Multiplication X * Y
+sign = S_X ^ S_Y;
+raw_exp = E_X + E_Y;
+exp = saturate(raw_exp, 2^(I+F)-2, 0);
+
+```
+
+
+===== LNS Division
+
+LNS division `X / Y` is performed by subtracting the exponent of `Y` from the exponent of `X` and
+ saturating the result to infinity if it overflows the exponent size or to zero
+  if it falls below the least representable exponent.
+
+===== LNS Addition
+
+```
+
+````
+
 
 [[zvlns]]
 ==== `Zvlns` - Vector Logarithmic Number System
