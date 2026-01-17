@@ -19,6 +19,7 @@ include::unpriv/zp.adoc[]
 include::scalar-crypto.adoc[]
 include::vector-crypto.adoc[]
 include::unpriv/matrix.adoc[]
+include::vector-dot.adoc[]
 include::naming.adoc[]
 
 // Appendices
