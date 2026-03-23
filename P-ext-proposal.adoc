@@ -1430,10 +1430,20 @@ addition wraps modulo 2^8. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PADD.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = s1_lo[(8*i+7):(8*i)]
@@ -1491,10 +1501,20 @@ addition wraps modulo 2^16. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PADD.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = s1_lo[(16*i+15):(16*i)]
@@ -1552,10 +1572,20 @@ wraps modulo 2^32. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two ADD operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 d_lo = s1_lo + s2_lo
 d_hi = s1_hi + s2_hi
@@ -1607,8 +1637,14 @@ wraps modulo 2^8. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PADD.BS operations on even/odd register pairs
-s1_lo  = X[rs1_p * 2]
-s1_hi  = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
 s2_b0  = X[rs2][7:0]           // least-significant byte of X[rs2]
 
 for i = 0 .. (XLEN/8 - 1):
@@ -1666,8 +1702,14 @@ element addition wraps modulo 2^16. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PADD.HS operations on even/odd register pairs
-s1_lo  = X[rs1_p * 2]
-s1_hi  = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
 s2_h0  = X[rs2][15:0]          // least-significant halfword of X[rs2]
 
 for i = 0 .. (XLEN/16 - 1):
@@ -1725,8 +1767,14 @@ wraps modulo 2^32. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PADD.WS operations on even/odd register pairs
-s1_lo  = X[rs1_p * 2]
-s1_hi  = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
 s2_w0  = X[rs2][31:0]          // least-significant word of X[rs2]
 
 d_lo = s1_lo + s2_w0
@@ -1920,10 +1968,20 @@ subtraction wraps modulo 2^8. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSUB.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = s1_lo[(8*i+7):(8*i)]
@@ -1981,10 +2039,20 @@ numbers. Each element subtraction wraps modulo 2^16. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSUB.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = s1_lo[(16*i+15):(16*i)]
@@ -2042,10 +2110,20 @@ subtraction wraps modulo 2^32. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SUB operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 d_lo = s1_lo - s2_lo
 d_hi = s1_hi - s2_hi
@@ -2520,10 +2598,20 @@ specify even register numbers. Each element result is clamped to the range
 [source,pseudocode]
 ----
 // Equivalent to two PSADD.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = signed(s1_lo[(8*i+7):(8*i)])
@@ -2594,10 +2682,20 @@ specify even register numbers. Each element result is clamped to the range
 [source,pseudocode]
 ----
 // Equivalent to two PSADD.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = signed(s1_lo[(16*i+15):(16*i)])
@@ -2668,10 +2766,20 @@ Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SADD operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 a = signed(s1_lo)
 b = signed(s2_lo)
@@ -2740,10 +2848,20 @@ specify even register numbers. Each element result is clamped to the range
 [source,pseudocode]
 ----
 // Equivalent to two PSADDU.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = unsigned(s1_lo[(8*i+7):(8*i)])
@@ -2809,9 +2927,22 @@ range [0, 2^16-1]. Available only on RV32.
 
 [source,pseudocode]
 ----
-// Even registers
-s1_lo = X[2*rs1_p]
-s2_lo = X[2*rs2_p]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+// Even and Odd registers
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[2*rs1_p]
+    s1_hi = X[2*rs1_p+1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[2*rs2_p]
+    s2_hi = X[2*rs2_p+1]
+
 
 for i = 0 .. 1:
     a = unsigned(s1_lo[(16*i+15):(16*i)])
@@ -2821,9 +2952,7 @@ for i = 0 .. 1:
         res = 2^16 - 1
     d_lo[(16*i+15):(16*i)] = res[15:0]
 
-// Odd registers
-s1_hi = X[2*rs1_p+1]
-s2_hi = X[2*rs2_p+1]
+
 
 for i = 0 .. 1:
     a = unsigned(s1_hi[(16*i+15):(16*i)])
@@ -3361,10 +3490,22 @@ odd registers of the pair. Each element result is clamped to the range
 
 [source,pseudocode]
 ----
-// Even registers
-s1_lo = X[2*rs1_p]
-s2_lo = X[2*rs2_p]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[2*rs1_p]
+    s1_hi = X[2*rs1_p+1]
 
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[2*rs2_p]
+    s2_hi = X[2*rs2_p+1]
+
+// Even registers
 for i = 0 .. 3:
     a = signed(s1_lo[(8*i+7):(8*i)])
     b = signed(s2_lo[(8*i+7):(8*i)])
@@ -3376,9 +3517,6 @@ for i = 0 .. 3:
     d_lo[(8*i+7):(8*i)] = res[7:0]
 
 // Odd registers
-s1_hi = X[2*rs1_p+1]
-s2_hi = X[2*rs2_p+1]
-
 for i = 0 .. 3:
     a = signed(s1_hi[(8*i+7):(8*i)])
     b = signed(s2_hi[(8*i+7):(8*i)])
@@ -3435,10 +3573,22 @@ range [-(2^15), 2^15-1]. Available only on RV32.
 
 [source,pseudocode]
 ----
-// Even registers
-s1_lo = X[2*rs1_p]
-s2_lo = X[2*rs2_p]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[2*rs1_p]
+    s1_hi = X[2*rs1_p+1]
 
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[2*rs2_p]
+    s2_hi = X[2*rs2_p+1]
+
+// Even registers
 for i = 0 .. 1:
     a = signed(s1_lo[(16*i+15):(16*i)])
     b = signed(s2_lo[(16*i+15):(16*i)])
@@ -3450,9 +3600,6 @@ for i = 0 .. 1:
     d_lo[(16*i+15):(16*i)] = res[15:0]
 
 // Odd registers
-s1_hi = X[2*rs1_p+1]
-s2_hi = X[2*rs2_p+1]
-
 for i = 0 .. 1:
     a = signed(s1_hi[(16*i+15):(16*i)])
     b = signed(s2_hi[(16*i+15):(16*i)])
@@ -3572,10 +3719,22 @@ range [0, 2^8-1]. Available only on RV32.
 
 [source,pseudocode]
 ----
-// Even registers
-s1_lo = X[2*rs1_p]
-s2_lo = X[2*rs2_p]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[2*rs1_p]
+    s1_hi = X[2*rs1_p+1]
 
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[2*rs2_p]
+    s2_hi = X[2*rs2_p+1]
+
+// Even registers
 for i = 0 .. 3:
     a = unsigned(s1_lo[(8*i+7):(8*i)])
     b = unsigned(s2_lo[(8*i+7):(8*i)])
@@ -3585,9 +3744,6 @@ for i = 0 .. 3:
     d_lo[(8*i+7):(8*i)] = res[7:0]
 
 // Odd registers
-s1_hi = X[2*rs1_p+1]
-s2_hi = X[2*rs2_p+1]
-
 for i = 0 .. 3:
     a = unsigned(s1_hi[(8*i+7):(8*i)])
     b = unsigned(s2_hi[(8*i+7):(8*i)])
@@ -3642,10 +3798,22 @@ the range [0, 2^16-1]. Available only on RV32.
 
 [source,pseudocode]
 ----
-// Even registers
-s1_lo = X[2*rs1_p]
-s2_lo = X[2*rs2_p]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[2*rs1_p]
+    s1_hi = X[2*rs1_p+1]
 
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[2*rs2_p]
+    s2_hi = X[2*rs2_p+1]
+
+// Even registers
 for i = 0 .. 1:
     a = unsigned(s1_lo[(16*i+15):(16*i)])
     b = unsigned(s2_lo[(16*i+15):(16*i)])
@@ -3655,9 +3823,6 @@ for i = 0 .. 1:
     d_lo[(16*i+15):(16*i)] = res[15:0]
 
 // Odd registers
-s1_hi = X[2*rs1_p+1]
-s2_hi = X[2*rs2_p+1]
-
 for i = 0 .. 1:
     a = unsigned(s1_hi[(16*i+15):(16*i)])
     b = unsigned(s2_hi[(16*i+15):(16*i)])
@@ -4167,10 +4332,20 @@ source and destination pairs. This instruction is available only on RV32.
 [source,pseudocode]
 ----
 // Register-pair sources: double the number of byte elements
-s1_lo = X[2*rs1_p]
-s1_hi = X[2*rs1_p+1]
-s2_lo = X[2*rs2_p]
-s2_hi = X[2*rs2_p+1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[2*rs1_p]
+    s1_hi = X[2*rs1_p+1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[2*rs2_p]
+    s2_hi = X[2*rs2_p+1]
 
 for i = 0 .. 3:
     a = signed(s1_lo[(8*i+7):(8*i)])
@@ -4231,10 +4406,20 @@ only on RV32.
 [source,pseudocode]
 ----
 // Register-pair sources: double the number of halfword elements
-s1_lo = X[2*rs1_p]
-s1_hi = X[2*rs1_p+1]
-s2_lo = X[2*rs2_p]
-s2_hi = X[2*rs2_p+1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[2*rs1_p]
+    s1_hi = X[2*rs1_p+1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[2*rs2_p]
+    s2_hi = X[2*rs2_p+1]
 
 for i = 0 .. 1:
     a = signed(s1_lo[(16*i+15):(16*i)])
@@ -4294,10 +4479,20 @@ source and destination pairs. This instruction is available only on RV32.
 [source,pseudocode]
 ----
 // Register-pair sources: two 32-bit word elements
-s1_lo = X[2*rs1_p]
-s1_hi = X[2*rs1_p+1]
-s2_lo = X[2*rs2_p]
-s2_hi = X[2*rs2_p+1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[2*rs1_p]
+    s1_hi = X[2*rs1_p+1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[2*rs2_p]
+    s2_hi = X[2*rs2_p+1]
 
 sum_lo = signed(s1_lo) + signed(s2_lo)
 d_lo = to_bits(32, sum_lo >> 1)
@@ -4352,10 +4547,20 @@ only on RV32.
 [source,pseudocode]
 ----
 // Register-pair sources: double the number of byte elements
-s1_lo = X[2*rs1_p]
-s1_hi = X[2*rs1_p+1]
-s2_lo = X[2*rs2_p]
-s2_hi = X[2*rs2_p+1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[2*rs1_p]
+    s1_hi = X[2*rs1_p+1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[2*rs2_p]
+    s2_hi = X[2*rs2_p+1]
 
 for i = 0 .. 3:
     a = unsigned(s1_lo[(8*i+7):(8*i)])
@@ -4416,10 +4621,20 @@ available only on RV32.
 [source,pseudocode]
 ----
 // Register-pair sources: double the number of halfword elements
-s1_lo = X[2*rs1_p]
-s1_hi = X[2*rs1_p+1]
-s2_lo = X[2*rs2_p]
-s2_hi = X[2*rs2_p+1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[2*rs1_p]
+    s1_hi = X[2*rs1_p+1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[2*rs2_p]
+    s2_hi = X[2*rs2_p+1]
 
 for i = 0 .. 1:
     a = unsigned(s1_lo[(16*i+15):(16*i)])
@@ -4479,10 +4694,20 @@ of the source and destination pairs. This instruction is available only on RV32.
 [source,pseudocode]
 ----
 // Register-pair sources: two 32-bit word elements
-s1_lo = X[2*rs1_p]
-s1_hi = X[2*rs1_p+1]
-s2_lo = X[2*rs2_p]
-s2_hi = X[2*rs2_p+1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[2*rs1_p]
+    s1_hi = X[2*rs1_p+1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[2*rs2_p]
+    s2_hi = X[2*rs2_p+1]
 
 sum_lo = unsigned(s1_lo) + unsigned(s2_lo)
 d_lo = to_bits(32, sum_lo >> 1)
@@ -4936,10 +5161,20 @@ only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PASUB.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = signed(s1_lo[(8*i+7):(8*i)])
@@ -4999,10 +5234,20 @@ only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PASUB.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = signed(s1_lo[(16*i+15):(16*i)])
@@ -5062,10 +5307,20 @@ only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two ASUB operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 diff_lo = signed(s1_lo) - signed(s2_lo)
 d_lo = to_bits(32, diff_lo >> 1)
@@ -5119,10 +5374,20 @@ only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PASUBU.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = unsigned(s1_lo[(8*i+7):(8*i)])
@@ -5182,10 +5447,20 @@ is available only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PASUBU.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = unsigned(s1_lo[(16*i+15):(16*i)])
@@ -5245,10 +5520,20 @@ only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two ASUBU operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 diff_lo = unsigned(s1_lo) - unsigned(s2_lo)
 d_lo = to_bits(32, diff_lo >> 1)
@@ -5599,10 +5884,20 @@ destination pairs. This instruction is available only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSH1ADD.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = s1_lo[(16*i+15):(16*i)]
@@ -5662,10 +5957,20 @@ instruction is available only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SH1ADD operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 d_lo = (s1_lo << 1) + s2_lo
 d_hi = (s1_hi << 1) + s2_hi
@@ -5720,10 +6025,20 @@ instruction is available only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSSH1SADD.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = s1_lo[(16*i+15):(16*i)]
@@ -5806,10 +6121,20 @@ instruction is available only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SSH1SADD operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 // Even register
 ssh1_lo : bits(32) =
@@ -6621,10 +6946,20 @@ other operand, and vice versa with subtraction. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PAS.HX operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 // Even register pair
 d_lo[31:16] = s1_lo[31:16] + s2_lo[15:0]
@@ -6683,10 +7018,20 @@ of `rs2`. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSA.HX operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 // Even register pair
 d_lo[31:16] = s1_lo[31:16] - s2_lo[15:0]
@@ -6744,10 +7089,20 @@ occurs, the overflow flag `vxsat` is set. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSAS.HX operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 // Even register pair: saturating add-subtract cross
 a_hi = signed(s1_lo[31:16])
@@ -6820,10 +7175,20 @@ occurs, the overflow flag `vxsat` is set. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSSA.HX operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 // Even register pair: saturating subtract-add cross
 a_hi = signed(s1_lo[31:16])
@@ -6896,10 +7261,20 @@ negative infinity). Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PAAS.HX operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 // Even register pair: averaging add-subtract cross
 a_hi = signed(s1_lo[31:16])
@@ -6969,10 +7344,20 @@ negative infinity). Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PASA.HX operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 // Even register pair: averaging subtract-add cross
 a_hi = signed(s1_lo[31:16])
@@ -7344,10 +7729,20 @@ on RV32.
 [source,pseudocode]
 ----
 // Register-pair sources: double the number of byte elements
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. 3:
     a = signed(s1_lo[(8*i+7):(8*i)])
@@ -7407,10 +7802,20 @@ available only on RV32.
 [source,pseudocode]
 ----
 // Register-pair sources: double the number of halfword elements
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. 1:
     a = signed(s1_lo[(16*i+15):(16*i)])
@@ -7470,10 +7875,20 @@ available only on RV32.
 [source,pseudocode]
 ----
 // Register-pair sources: double the number of byte elements
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. 3:
     a = unsigned(s1_lo[(8*i+7):(8*i)])
@@ -7533,10 +7948,20 @@ instruction is available only on RV32.
 [source,pseudocode]
 ----
 // Register-pair sources: double the number of halfword elements
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. 1:
     a = unsigned(s1_lo[(16*i+15):(16*i)])
@@ -7709,8 +8134,13 @@ is set. This instruction is available only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSABS.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 
 for i = 0 .. 3:
     val = signed(s1_lo[(8*i+7):(8*i)])
@@ -7781,8 +8211,13 @@ flag `vxsat` is set. This instruction is available only on RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSABS.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 
 for i = 0 .. 1:
     val = signed(s1_lo[(16*i+15):(16*i)])
@@ -8679,10 +9114,20 @@ only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMIN.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = signed(s1_lo[(8*i+7):(8*i)])
@@ -8740,10 +9185,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMIN.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = signed(s1_lo[(16*i+15):(16*i)])
@@ -8801,10 +9256,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two signed MIN operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 d_lo = (signed(s1_lo) < signed(s2_lo)) ? s1_lo : s2_lo
 d_hi = (signed(s1_hi) < signed(s2_hi)) ? s1_hi : s2_hi
@@ -8855,10 +9320,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMINU.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = unsigned(s1_lo[(8*i+7):(8*i)])
@@ -8916,10 +9391,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMINU.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = unsigned(s1_lo[(16*i+15):(16*i)])
@@ -8977,10 +9462,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two unsigned MIN operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 d_lo = (unsigned(s1_lo) < unsigned(s2_lo)) ? s1_lo : s2_lo
 d_hi = (unsigned(s1_hi) < unsigned(s2_hi)) ? s1_hi : s2_hi
@@ -9031,10 +9526,20 @@ only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMAX.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = signed(s1_lo[(8*i+7):(8*i)])
@@ -9092,10 +9597,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMAX.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = signed(s1_lo[(16*i+15):(16*i)])
@@ -9153,10 +9668,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two signed MAX operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 d_lo = (signed(s1_lo) > signed(s2_lo)) ? s1_lo : s2_lo
 d_hi = (signed(s1_hi) > signed(s2_hi)) ? s1_hi : s2_hi
@@ -9207,10 +9732,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMAXU.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = unsigned(s1_lo[(8*i+7):(8*i)])
@@ -9268,10 +9803,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMAXU.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = unsigned(s1_lo[(16*i+15):(16*i)])
@@ -9329,10 +9874,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two unsigned MAX operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 d_lo = (unsigned(s1_lo) > unsigned(s2_lo)) ? s1_lo : s2_lo
 d_hi = (unsigned(s1_hi) > unsigned(s2_hi)) ? s1_hi : s2_hi
@@ -9915,10 +10470,20 @@ equal, or all-zeros (0x00) otherwise. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMSEQ.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = s1_lo[(8*i+7):(8*i)]
@@ -9977,10 +10542,20 @@ equal, or all-zeros (0x0000) otherwise. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMSEQ.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = s1_lo[(16*i+15):(16*i)]
@@ -10039,10 +10614,20 @@ are equal, or all-zeros (0x00000000) otherwise. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two MSEQ operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 d_lo = (s1_lo == s2_lo) ? 0xFFFFFFFF : 0x00000000
 d_hi = (s1_hi == s2_hi) ? 0xFFFFFFFF : 0x00000000
@@ -10095,10 +10680,20 @@ otherwise. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMSLT.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = signed(s1_lo[(8*i+7):(8*i)])
@@ -10158,10 +10753,20 @@ otherwise. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PMSLT.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = signed(s1_lo[(16*i+15):(16*i)])
@@ -10221,10 +10826,20 @@ otherwise. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two MSLT operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 d_lo = (signed(s1_lo) < signed(s2_lo)) ? 0xFFFFFFFF : 0x00000000
 d_hi = (signed(s1_hi) < signed(s2_hi)) ? 0xFFFFFFFF : 0x00000000
@@ -10277,10 +10892,20 @@ unsigned `rs1` element is less than the unsigned `rs2` element, or all-zeros
 [source,pseudocode]
 ----
 // Equivalent to two PMSLTU.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/8 - 1):
     a = unsigned(s1_lo[(8*i+7):(8*i)])
@@ -10340,10 +10965,20 @@ unsigned `rs1` element is less than the unsigned `rs2` element, or all-zeros
 [source,pseudocode]
 ----
 // Equivalent to two PMSLTU.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     a = unsigned(s1_lo[(16*i+15):(16*i)])
@@ -10403,10 +11038,20 @@ otherwise. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two MSLTU operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 d_lo = (unsigned(s1_lo) < unsigned(s2_lo)) ? 0xFFFFFFFF : 0x00000000
 d_hi = (unsigned(s1_hi) < unsigned(s2_hi)) ? 0xFFFFFFFF : 0x00000000
@@ -10582,8 +11227,13 @@ Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSEXT.H.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     b = s1_lo[(16*i+7):(16*i)]
@@ -10638,8 +11288,13 @@ only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SEXT.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 
 d_lo = sign_extend(XLEN, s1_lo[7:0])
 d_hi = sign_extend(XLEN, s1_hi[7:0])
@@ -10689,8 +11344,13 @@ only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SEXT.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 
 d_lo = sign_extend(XLEN, s1_lo[15:0])
 d_hi = sign_extend(XLEN, s1_hi[15:0])
@@ -11189,8 +11849,13 @@ flag is set. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSATI.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 n = uimm4[3:0]
 minval_h = sign_extend(16, 0xFFFF << n)
 maxval_h = ~minval_h
@@ -11268,8 +11933,13 @@ only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SATI operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 n     = uimm5[4:0]
 
 minval = sign_extend(32, 1 << n)       // -(2^n)
@@ -11340,8 +12010,13 @@ Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PUSATI.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 n     = uimm4[3:0]
 
 maxval = (1 << n) - 1                  // 2^n - 1
@@ -11415,8 +12090,13 @@ Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two USATI operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 n     = uimm5[4:0]
 
 maxval = (1 << n) - 1                  // 2^n - 1
@@ -12436,8 +13116,13 @@ Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSLL.BS operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = X[rs2][4:0]
 
 for i = 0 .. (XLEN/8 - 1):
@@ -12496,8 +13181,13 @@ Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSLL.HS operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = X[rs2][4:0]
 
 for i = 0 .. (XLEN/16 - 1):
@@ -12556,8 +13246,13 @@ RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SLL operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = X[rs2][4:0]
 
 d_lo = (zero_extend(64, s1_lo) << shamt)[31:0]
@@ -12611,8 +13306,13 @@ with zeros. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSRL.BS operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = X[rs2][4:0]
 
 for i = 0 .. (XLEN/8 - 1):
@@ -12671,8 +13371,13 @@ with zeros. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSRL.HS operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = X[rs2][4:0]
 
 for i = 0 .. (XLEN/16 - 1):
@@ -12731,8 +13436,13 @@ Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SRL operations on even/odd register pairs
-s1_lo  = X[rs1_p * 2]
-s1_hi  = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt  = X[rs2][4:0]
 
 d_lo = s1_lo >> shamt
@@ -12787,8 +13497,13 @@ RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSRA.BS operations on even/odd register pairs
-s1_lo  = X[rs1_p * 2]
-s1_hi  = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt  = X[rs2][4:0]
 
 for i = 0 .. (XLEN/8 - 1):
@@ -12848,8 +13563,13 @@ only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSRA.HS operations on even/odd register pairs
-s1_lo  = X[rs1_p * 2]
-s1_hi  = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt  = X[rs2][4:0]
 
 for i = 0 .. (XLEN/16 - 1):
@@ -12908,8 +13628,13 @@ Each element is sign-extended before shifting. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SRA operations on even/odd register pairs
-s1_lo  = X[rs1_p * 2]
-s1_hi  = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt  = X[rs2][4:0]
 
 d_lo = signed(s1_lo) >> shamt
@@ -12962,8 +13687,13 @@ numbers. Vacated bits are filled with zeros. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSLLI.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = uimm3[2:0]          // 3-bit shift amount for bytes
 
 for i = 0 .. (XLEN/8 - 1):
@@ -13022,8 +13752,13 @@ Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSLLI.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = uimm4[3:0]          // 4-bit shift amount for halfwords
 
 for i = 0 .. (XLEN/16 - 1):
@@ -13081,8 +13816,13 @@ numbers. Vacated bits are filled with zeros. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SLLI operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = uimm5[4:0]          // 5-bit shift amount for words
 
 d_lo = s1_lo << shamt
@@ -13136,8 +13876,13 @@ Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSRLI.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = uimm3[2:0]          // 3-bit shift amount for bytes
 
 for i = 0 .. (XLEN/8 - 1):
@@ -13196,8 +13941,13 @@ Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSRLI.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = uimm4[3:0]          // 4-bit shift amount for halfwords
 
 for i = 0 .. (XLEN/16 - 1):
@@ -13256,8 +14006,13 @@ RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SRLI operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = uimm5[4:0]          // 5-bit shift amount for words
 
 d_lo = s1_lo >> shamt
@@ -13311,8 +14066,13 @@ shifting. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSRAI.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = uimm3[2:0]          // 3-bit shift amount for bytes
 
 for i = 0 .. (XLEN/8 - 1):
@@ -13371,8 +14131,13 @@ sign-extended before shifting. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSRAI.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = uimm4[3:0]          // 4-bit shift amount for halfwords
 
 for i = 0 .. (XLEN/16 - 1):
@@ -13431,8 +14196,13 @@ shifting. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SRAI operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = uimm5[4:0]          // 5-bit shift amount for words
 
 d_lo = signed(s1_lo) >> shamt
@@ -13487,8 +14257,13 @@ added for rounding. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSRARI.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = uimm4[3:0]          // 4-bit shift amount for halfwords
 
 for i = 0 .. (XLEN/16 - 1):
@@ -13558,8 +14333,13 @@ for rounding. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SRARI operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt = uimm5[4:0]          // 5-bit shift amount for words
 
 if shamt == 0:
@@ -14918,8 +15698,13 @@ only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSSHA.HS operations on even/odd register pairs
-s1_lo  = X[rs1_p * 2]
-s1_hi  = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt  = X[rs2][7:0]
 sshamt = signed(shamt)
 
@@ -15005,8 +15790,13 @@ only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SSHA operations on even/odd register pairs
-s1_lo  = X[rs1_p * 2]
-s1_hi  = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt  = X[rs2][7:0]
 sshamt = signed(shamt)
 
@@ -15087,8 +15877,13 @@ Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PSSHAR.HS operations on even/odd register pairs
-s1_lo  = X[rs1_p * 2]
-s1_hi  = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt  = X[rs2][7:0]
 sshamt = signed(shamt)
 
@@ -15179,8 +15974,13 @@ only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two SSHAR operations on even/odd register pairs
-s1_lo  = X[rs1_p * 2]
-s1_hi  = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 shamt  = X[rs2][7:0]
 sshamt = signed(shamt)
 
@@ -15557,8 +16357,13 @@ numbers. If any result overflows the signed 16-bit range, it is saturated and th
 [source,pseudocode]
 ----
 // Equivalent to two PSSLAI.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 imm = uimm4[3:0]
 
 for i = 0 .. (XLEN/16 - 1):
@@ -15633,8 +16438,13 @@ numbers. If any result overflows the signed 32-bit range, it is saturated and th
 [source,pseudocode]
 ----
 // Equivalent to two SSLAI operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
+// When rs1_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
 imm = uimm5[4:0]
 
 a_lo = sign_extend(64, s1_lo)
@@ -16234,10 +17044,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PPAIRE.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     s1_h = s1_lo[(16*i+15):(16*i)]
@@ -16295,10 +17115,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PPAIRE.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/32 - 1):
     s1_w = s1_lo[(32*i+31):(32*i)]
@@ -16356,10 +17186,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PPAIREO.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     s1_h = s1_lo[(16*i+15):(16*i)]
@@ -16417,10 +17257,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PPAIREO.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/32 - 1):
     s1_w = s1_lo[(32*i+31):(32*i)]
@@ -16478,10 +17328,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PPAIROE.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     s1_h = s1_lo[(16*i+15):(16*i)]
@@ -16539,10 +17399,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PPAIROE.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/32 - 1):
     s1_w = s1_lo[(32*i+31):(32*i)]
@@ -16600,10 +17470,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PPAIRO.B operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/16 - 1):
     s1_h = s1_lo[(16*i+15):(16*i)]
@@ -16661,10 +17541,20 @@ numbers. Available only in RV32.
 [source,pseudocode]
 ----
 // Equivalent to two PPAIRO.H operations on even/odd register pairs
-s1_lo = X[rs1_p * 2]
-s1_hi = X[rs1_p * 2 + 1]
-s2_lo = X[rs2_p * 2]
-s2_hi = X[rs2_p * 2 + 1]
+// When rs1_p or rs2_p is 0, the full 64-bit value must be zero
+if (rs1_p == 0):
+    s1_lo = 0
+    s1_hi = 0
+else:
+    s1_lo = X[rs1_p * 2]
+    s1_hi = X[rs1_p * 2 + 1]
+
+if (rs2_p == 0):
+    s2_lo = 0
+    s2_hi = 0
+else:
+    s2_lo = X[rs2_p * 2]
+    s2_hi = X[rs2_p * 2 + 1]
 
 for i = 0 .. (XLEN/32 - 1):
     s1_w = s1_lo[(32*i+31):(32*i)]
