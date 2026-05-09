@@ -156,12 +156,15 @@ Operation::
 --
 function clause execute (VDOT4A(vs2, vs1, vd, suffix)) = {
   foreach (i from vstart to vl-1) {
-    // TODO sign extension
     let {a0 @ a1 @ a2 @ a3} : bits (4*SEW/4) = get_velem(vs2, i)
     let {b0 @ b1 @ b2 @ b3} : bits (4*SEW/4) = if suffix =="vv" then get_velem(vs1, i)
                           else zext_or_truncate_to_sew(X(rs1));
     let acc : bits (SEW) = get_velem(vd, i);
-    let res : bits (SEW) = a0 * b0 + a1 * b1 + a2 * b2 + a3 * b3 + acc;
+    let res : bits (SEW) = sign_extend(a0) * sign_extend(b0)
+                         + sign_extend(a1) * sign_extend(b1)
+                         + sign_extend(a2) * sign_extend(b2)
+                         + sign_extend(a3) * sign_extend(b3)
+                         + acc;
     set_velem(vd, i, res);
   }
   RETIRE_SUCCESS
@@ -250,12 +253,15 @@ Operation::
 --
 function clause execute (VDOT4AU(vs2, vs1, vd, suffix)) = {
   foreach (i from vstart to vl-1) {
-    // TODO sign extension
-    let {a0 @ a1 @ a2 @ a3} : bits (4*8) = get_velem(vs2, i)
-    let {b0 @ b1 @ b2 @ b3} : bits (4*8) = if suffix =="vv" then get_velem(vs1, i)
+    let {a0 @ a1 @ a2 @ a3} : bits (4*SEW/4) = get_velem(vs2, i)
+    let {b0 @ b1 @ b2 @ b3} : bits (4*SEW/4) = if suffix =="vv" then get_velem(vs1, i)
                           else zext_or_truncate_to_sew(X(rs1));
     let acc : bits (SEW) = get_velem(vd, i);
-    let res : bits (SEW) = a0 * b0 + a1 * b1 + a2 * b2 + a3 * b3 + acc;
+    let res : bits (SEW) = zero_extend(a0) * zero_extend(b0)
+                         + zero_extend(a1) * zero_extend(b1)
+                         + zero_extend(a2) * zero_extend(b2)
+                         + zero_extend(a3) * zero_extend(b3)
+                         + acc;
     set_velem(vd, i, res);
   }
   RETIRE_SUCCESS
@@ -344,12 +350,15 @@ Operation::
 --
 function clause execute (VDOT4ASU(vs2, vs1, vd, suffix)) = {
   foreach (i from vstart to vl-1) {
-    // TODO sign extension
-    let {a0 @ a1 @ a2 @ a3} : bits (4*8) = get_velem(vs2, i)
-    let {b0 @ b1 @ b2 @ b3} : bits (4*8) = if suffix =="vv" then get_velem(vs1, i)
+    let {a0 @ a1 @ a2 @ a3} : bits (4*SEW/4) = get_velem(vs2, i)
+    let {b0 @ b1 @ b2 @ b3} : bits (4*SEW/4) = if suffix =="vv" then get_velem(vs1, i)
                           else zext_or_truncate_to_sew(X(rs1));
     let acc : bits (SEW) = get_velem(vd, i);
-    let res : bits (SEW) = a0 * b0 + a1 * b1 + a2 * b2 + a3 * b3 + acc;
+    let res : bits (SEW) = sign_extend(a0) * zero_extend(b0)
+                         + sign_extend(a1) * zero_extend(b1)
+                         + sign_extend(a2) * zero_extend(b2)
+                         + sign_extend(a3) * zero_extend(b3)
+                         + acc;
     set_velem(vd, i, res);
   }
   RETIRE_SUCCESS
@@ -424,11 +433,14 @@ Operation::
 --
 function clause execute (VDOT4AUS(vs2, vs1, vd)) = {
   foreach (i from vstart to vl-1) {
-    // TODO sign extension
     let {a0 @ a1 @ a2 @ a3} : bits (4*SEW/4) = get_velem(vs2, i)
     let {b0 @ b1 @ b2 @ b3} : bits (4*SEW/4) = zext_or_truncate_to_sew(X(rs1));
     let acc : bits (SEW) = get_velem(vd, i);
-    let res : bits (SEW) = a0 * b0 + a1 * b1 + a2 * b2 + a3 * b3 + acc;
+    let res : bits (SEW) = zero_extend(a0) * sign_extend(b0)
+                         + zero_extend(a1) * sign_extend(b1)
+                         + zero_extend(a2) * sign_extend(b2)
+                         + zero_extend(a3) * sign_extend(b3)
+                         + acc;
     set_velem(vd, i, res);
   }
   RETIRE_SUCCESS
